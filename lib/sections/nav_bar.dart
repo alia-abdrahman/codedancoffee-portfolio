@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../data/content.dart';
 import '../section_keys.dart';
 import '../theme/app_colors.dart';
 import '../widgets/responsive.dart';
@@ -41,14 +40,10 @@ class NavBar extends StatelessWidget {
       child: Row(
         children: [
           // Logo
-          Text(
-            companyName,
-            style: GoogleFonts.fraunces(
-              fontSize: mobile ? 18 : 22,
-              fontWeight: FontWeight.w700,
-              color: espresso,
-              letterSpacing: -0.3,
-            ),
+          Image.asset(
+            'assets/images/logo.png',
+            height: mobile ? 80 : 144,
+            fit: BoxFit.contain,
           ),
 
           const Spacer(),
@@ -105,14 +100,10 @@ class NavDrawer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                companyName,
-                style: GoogleFonts.fraunces(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  color: espresso,
-                  letterSpacing: -0.3,
-                ),
+              Image.asset(
+                'assets/images/logo.png',
+                height: 104,
+                fit: BoxFit.contain,
               ),
               const SizedBox(height: 32),
               for (final item in _navItems)

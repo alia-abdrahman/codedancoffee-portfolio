@@ -452,6 +452,63 @@ No separate "mobile app." The same code adapts.
 
 Without an account → site expires in ~24 hours. With a free Netlify account, claim the site to keep it forever (and rename the subdomain to something readable).
 
+### Vercel CLI (the path we took)
+
+One-time setup:
+
+1. `npm i -g vercel`
+2. `vercel login` — opens a browser device-auth flow.
+
+First deploy (treats `build/web` as a static site, since Vercel doesn't ship Flutter):
+
+```bash
+flutter build web --release
+cd build/web
+vercel
+```
+
+Wizard answers: link to existing project? **no** → name → directory `./` → customize settings **no** → additional settings **no**. Vercel uploads the folder, prints a Production URL plus a clean alias (`codedancoffee.vercel.app`), and links the directory to the new project (writes a `.vercel/` folder).
+
+Re-deploys after that are one command:
+
+```bash
+flutter build web --release && cd build/web && vercel --prod
+```
+
+`--prod` pushes straight to the aliased URL. Without it, you get a fresh preview URL — handy for testing before promoting.
+
+---
+
+## Phase 17 — Custom image assets
+
+Swapped the hero's `Icon(Icons.coffee_outlined, ...)` for the studio logo PNG. Three-step rhythm for any image asset:
+
+1. **Drop the file in `assets/images/`** at the project root (convention — Flutter has no enforced location; this just keeps things tidy).
+2. **Declare it in `pubspec.yaml`** under `flutter > assets:`:
+   ```yaml
+   flutter:
+     uses-material-design: true
+     assets:
+       - assets/images/logo.png   # one file
+       # - assets/images/         # OR the whole folder, trailing slash
+   ```
+3. **Use `Image.asset('assets/images/logo.png', width: ..., fit: BoxFit.contain)`** in code. Path must match the pubspec entry exactly.
+
+### New shapes that showed up
+
+- **`Image.asset(path, width:, height:, fit:)`** — the standard widget for bundled images.
+- **`BoxFit`** — how the image scales inside its given box:
+  - `contain` — fit fully inside, no crop, may letterbox.
+  - `cover` — fill the box, crop excess. Good for background photos.
+  - `fill` — stretch to fill, ignores aspect ratio (avoid unless intentional).
+- **No `color:` on `Image.asset` by default** — it paints actual pixels from the file, not a tintable glyph like `Icon`.
+
+### Rules of thumb
+
+- **`const` cascades from leaves up.** `Image.asset(...)` is not a const constructor (reads a file at runtime), so the moment one child loses `const`, every parent on its path has to drop `const` too. Watch for analyzer hints when this happens.
+- **For logos, prefer a transparent PNG** so the image's background doesn't fight the surface it's placed on. SVG support exists via the `flutter_svg` package if you want crisp scaling.
+- **Flutter web: new asset declarations need a full `flutter run` restart, NOT a hot restart.** The asset manifest is generated when the dev server starts up; capital `R` re-runs Dart but doesn't regenerate the manifest. If you get "Unable to load asset" after declaring it correctly, press `q` to quit and re-run `flutter run -d chrome`. (Mobile is more forgiving — hot restart usually works there.)
+
 ### What's worth doing next on the deploy side
 
 - **Custom subdomain**: Netlify dashboard → Site settings → rename to `codedancoffee.netlify.app`.
