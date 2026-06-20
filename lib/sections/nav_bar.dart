@@ -4,18 +4,6 @@ import '../section_keys.dart';
 import '../theme/app_colors.dart';
 import '../widgets/responsive.dart';
 
-// Helper: smooth-scroll to the section tagged with `key`.
-void _scrollTo(GlobalKey key) {
-  final ctx = key.currentContext;
-  if (ctx == null) return;
-  Scrollable.ensureVisible(
-    ctx,
-    duration: const Duration(milliseconds: 600),
-    curve: Curves.easeInOutCubic,
-    alignment: 0.0,
-  );
-}
-
 // One source of truth for the nav links so desktop bar + mobile drawer match.
 final _navItems = <({String label, GlobalKey key})>[
   (label: 'Home', key: heroKey),
@@ -33,9 +21,11 @@ class NavBar extends StatelessWidget {
     final mobile = isMobile(context);
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: mobile ? 24 : 48,
-        vertical: 24,
+      padding: EdgeInsets.fromLTRB(
+        mobile ? 24 : 48,
+        0,
+        mobile ? 24 : 48,
+        24,
       ),
       child: Row(
         children: [
@@ -119,7 +109,7 @@ class NavDrawer extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.of(context).pop(); // close drawer
-                    _scrollTo(item.key);
+                    scrollToSection(item.key);
                   },
                 ),
             ],
@@ -138,7 +128,7 @@ class _NavLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => _scrollTo(targetKey),
+      onPressed: () => scrollToSection(targetKey),
       style: TextButton.styleFrom(
         foregroundColor: cocoa,
         textStyle: const TextStyle(

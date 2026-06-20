@@ -1,4 +1,5 @@
 import 'models.dart';
+import '../theme/app_colors.dart';
 
 const companyName = 'codedancoffee';
 const companyTagline = 'Freelance web & mobile development';
@@ -40,30 +41,47 @@ const services = <Service>[
 const projects = <Project>[
   Project(
     name: 'Tasmi',
+    slug: 'tasmi',
     description: 'TODO: short description of Tasmi.',
+    coverColor: vanilla,
+    appStoreUrl: 'https://apps.apple.com/my/app/tasmi/id6770039955',
   ),
   Project(
     name: 'Meds Diary',
+    slug: 'meds-diary',
     description: 'TODO: short description of Meds Diary.',
+    coverColor: matcha,
+    appStoreUrl: 'https://apps.apple.com/my/app/meds-diary/id6761620429',
   ),
   Project(
-    name: 'My Ruqyah',
-    description: 'TODO: short description of My Ruqyah.',
+    name: 'MyRuqyah',
+    slug: 'myruqyah',
+    description: 'TODO: short description of MyRuqyah.',
+    coverColor: peach,
+    appStoreUrl: 'https://apps.apple.com/my/app/myruqyah/id6760955875',
   ),
   Project(
     name: 'Planetarium Negara',
+    slug: 'planetarium-negara',
     description: 'TODO: short description of Planetarium Negara.',
+    coverColor: latte,
   ),
   Project(
     name: 'MBPJ',
+    slug: 'mbpj',
     description: 'TODO: short description of MBPJ.',
+    coverColor: caramel,
   ),
   Project(
     name: 'Autogate',
+    slug: 'autogate',
     description: 'TODO: short description of Autogate.',
+    coverColor: vanilla,
   ),
   Project(
     name: 'AlignFitness',
+    slug: 'align-fitness',
     description: 'TODO: short description of AlignFitness.',
+    coverColor: matcha,
   ),
 ];

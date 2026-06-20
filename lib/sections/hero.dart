@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../data/content.dart';
+import '../section_keys.dart';
 import '../theme/app_colors.dart';
 import '../widgets/responsive.dart';
 
@@ -13,7 +14,7 @@ class HeroSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(
         mobile ? 24 : 48,
-        mobile ? 32 : 64,
+        mobile ? 16 : 32,
         mobile ? 24 : 48,
         mobile ? 56 : 96,
       ),
@@ -98,7 +99,7 @@ class _HeroText extends StatelessWidget {
           runSpacing: 12,
           children: [
             FilledButton(
-              onPressed: () {},
+              onPressed: () => scrollToSection(contactKey),
               style: FilledButton.styleFrom(
                 backgroundColor: espresso,
                 foregroundColor: cream,
@@ -115,7 +116,7 @@ class _HeroText extends StatelessWidget {
               child: const Text('Start a project'),
             ),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () => scrollToSection(portfolioKey),
               style: OutlinedButton.styleFrom(
                 foregroundColor: espresso,
                 side: BorderSide(color: caramel),
